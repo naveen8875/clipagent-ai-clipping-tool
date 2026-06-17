@@ -1,0 +1,111 @@
+# Opinion comment video outline extraction Prompt
+
+## Input format
+You will receive a JSON input:
+
+{
+"text": "{Video transcribed text snippet}"
+}
+
+- The `text` field is a fragment of the video transcribed content;
+- This content has been manually proofread to ensure basic semantic coherence;
+- Please only use the input content as a source of information, without any external expansion, common sense reasoning or logical supplementation.
+
+## Core mission: Pay equal attention to the depth of viewpoints and the value of speculation
+Your task is to **completely cover** all important ideas and arguments in the input text, while maintaining **moderate refinement** and avoid over-refinement.The goal is to extract **8-15 core topics**, each topic corresponding to **3-8 minutes** of video content.
+
+## Topic extraction principles
+
+### 1. Principle of priority of viewpoint value
+- **Uniqueness first**: Prioritize the extraction of content with unique perspectives, novel viewpoints or in-depth thinking
+- **Controversial Attention**: Focus on controversial viewpoints that are worthy of discussion and can trigger speculation.
+- **Logical Completeness**: Ensure that each point contains complete argumentation logic (point of view-argument-conclusion)
+
+### 2. The principle of depth of speculation
+- **Multi-dimensional analysis**: Prioritize the extraction of in-depth discussions that include multi-angle analysis and pros and cons comparisons
+- **Critical Thinking**: Focus on content that reflects critical thinking and rational analysis
+- **Value Judgment**: Highlight expressions of opinions that include clear value positions and judgment standards
+
+### 3. Principle of social significance
+- **Realistic Relevance**: Prioritize the extraction of opinions related to current social phenomena and hot events
+- **Universal Value**: Focus on discussion of viewpoints that are of universal significance and can resonate.
+- **Inspiring meaning**: Highlight content that has inspiring value and mind-expanding significance for the audience
+
+### 4. Express the integrity principle
+- **Clear viewpoints**: Make sure each topic contains clear opinions, positions and attitudes
+- **Sufficient Argument**: Ensure the integrity of the argumentation process, including multiple arguments such as facts, logic, and emotions.
+- **Clear conclusion**: Ensure that the opinions expressed have clear conclusions or value judgments
+
+## Topic merging and splitting strategies
+
+### Merge conditions (the following situations should be merged into one topic):
+- Discuss different aspects or angles of the same social phenomenon
+- A chain of interrelated arguments and arguments
+- Expression of different views under the same value system
+- Multi-dimensional analysis of the same problem
+
+### Split conditions (the following situations should be split into different topics):
+- Fundamental changes in viewpoints and stances
+- The topic of discussion changes from one area to another
+- The argument method shifts from rational analysis to emotional expression
+- Significant changes in value judgment standards
+
+## Output format
+
+Please output strictly in the following format without adding other descriptive text:
+
+### Outline:
+1. **[First-level topic name]**
+- [Sub-topic 1: Highlight the uniqueness and speculative value of viewpoints]
+- [Sub-topic 2: Highlight the uniqueness and speculative value of viewpoints]
+-…
+
+2. **[First-level topic name]**
+- [Subtopic 1]
+-…
+
+## Output example
+
+### Outline:
+1. **Reconstruction of values ​​among contemporary young people**
+- Analysis of value shift from material pursuit to spiritual satisfaction
+- Thinking about the balance between individualism and collective responsibility
+- Discussion on the integration path of traditional culture and modern concepts
+- Analysis of the conflict between social expectations and personal choices
+
+2. **Criticism of the information cocoon phenomenon in the Internet era**
+- The impact of algorithm recommendation mechanism on thinking patterns
+- The contradictory relationship between information overload and the ability to think deeply
+- The necessity and ways to achieve multiple perspectives
+- The importance of rational judgment in the era of information explosion
+
+3. **In-depth thinking on educational equity and social mobility**
+- Analysis of the root causes of uneven distribution of educational resources
+- The applicability of the concept of knowledge changing destiny in the new era
+- The impact of diversified success standards on traditional education concepts
+- Thoughts on strategies to deal with the trend of social class consolidation
+
+## Special considerations for opinion content
+
+### 1. Handling controversial opinions:
+- Ensure that controversial opinions are expressed completely and impartially
+- Argument process including different positions
+- Maintain the original context and emotional color of the point of view expressed
+
+### 2. Value judgment content:
+-Clearly distinguish between factual statements and value judgments
+- Clear expression of retained value position
+- Contains the basis and standards for value judgments
+
+### 3. Social criticism content:
+- Keep criticism constructive and rational
+- Contains problem analysis and solution ideas
+- Avoid purely emotional venting or meaningless complaints
+
+## Notes
+
+1. **Perspective Completeness**: Ensure that the extracted topics can fully reflect the core position of the original opinion
+2. **Speculative Value**: Prioritize the extraction of content that has speculative value and can trigger in-depth thinking.
+3. **Social significance**: Focus on unique and inspiring viewpoints on social phenomena
+4. **Clear logic**: Ensure that the logical chain of opinion expression is complete and the argumentation process is clear
+5. **Value Neutral**: Maintain a neutral stance during the extraction process and do not make value judgments on opinions.

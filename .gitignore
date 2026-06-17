@@ -1,0 +1,28 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+venv/
+.venv/
+
+# Node / Next.js
+node_modules/
+.next/
+
+# Project runtime data
+clipping-tool-be/uploads/
+clipping-tool-be/output/
+clipping-tool-be/data/projects.json
+clipping-tool-be/data/settings.json
+
+# Local env files
+.env
+.env.local
+.env.*.local
+
+# Frontend / package manager extras
+coverage/
+*.tsbuildinfo

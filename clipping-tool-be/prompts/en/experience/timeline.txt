@@ -1,0 +1,101 @@
+# Experience sharing video time point positioning Prompt
+
+## Core principles: complete experience, clear operation, practical value
+
+1. **Experience Completeness**: The timestamp must strictly correspond to the complete experience sharing and method introduction.
+2. **Operational coherence**: The time range must completely cover all key steps of an experience to ensure complete operational logic.
+3. **Natural Boundary**: Prioritize locating time points at the natural boundaries of method switching, skill switching, or experience topics.
+
+---
+
+## Key instructions: how to determine `start_time` and `end_time`
+
+### Determination of `start_time`:
+- Should be targeted to the start time of the first core introduction sentence that shares the experience.
+- Ignore extraneous transitions, personal chatter, or background information that precedes this introduction.
+- **Preference**: Ensure the completeness of the presentation of methods at a starting point where the empirical topic is clearly presented.
+- **Special considerations for experience content**: If there is important background explanation or problem description, the starting time should be moved forward appropriately.
+
+### Determination of `end_time` (most important):
+- **Must** be the end timestamp** of the **last sentence** covering the experience core share.
+- **Method Integrity**: Ensure that core content such as experience introduction, operating steps, precautions, etc. are complete and there are no method gaps.
+- **Natural ending**: Give priority to ending at a concluding sentence, effect description or experience transformation.
+- **Practical Points Included**: If there are important practical points or notes at the end of the experience, these should be included.
+- If the experience sharing discussion continues until the end of the provided SRT text block, then `end_time` should be the end timestamp of the last relevant subtitle.
+- **Wrong practice**: Set `end_time` to the end time of the entire text block without thinking.This is absolutely to be avoided.
+
+### Principles of duration control of experience content:
+- **Target Duration**: Each experience topic segment should be between 3-8 minutes
+- **Complex Method Duration**: Complex methods involving multi-step operations can be appropriately extended to 10 minutes
+- **Simple Tips**: Clear and concise tips that can be compressed into 2-3 minutes
+- **Systematic Method**: The complete method system or workflow can be extended to 12 minutes
+
+### Special treatment for experience content:
+- **Operation Steps**: Methods containing multiple steps should keep the entire process intact
+- **Case Description**: Important practical cases and effect demonstrations should be taken as a whole
+- **Technical Points**: Core skills and precautions should appear together and cannot be separated.
+- **Problem Solution**: The problem description and solution should be fully included
+
+---
+
+## Input format
+You will receive a JSON object containing:
+- `outline`: A JSON array containing **multiple** experience topics to be processed.
+- `srt_text`: A **single** SRT text block related to this batch of topics, in the format of `serial number\nstart --> end\ntext\n\n`.
+
+## Output format
+- Strictly follow the structure of the input outline and add `start_time` and `end_time` fields to **each** topic object.
+- **Key:** On output, rename the input's `title` field to `outline` and the `subtopics` field to `content`.
+- The final output is a JSON array containing **all** processed topics.
+- Make sure the time format is `HH:MM:SS,mmm`.
+
+**Strict JSON output requirements:**
+1. The output must start with `[` and end with `]`. Do not add any explanation text, title or Markdown code block mark
+2. Use standard English double quotation marks ", never use Chinese quotation marks "" or single quotation marks
+3. Make sure that all parentheses and square brackets match correctly, objects are separated by commas, and there is no comma after the last object.
+4. Quotes in strings must be escaped as \"
+5. Cannot contain any comments, extra text or control characters
+6. Ensure that the JSON format is fully valid and can be parsed by standard JSON parsers
+
+## Example of experience content time positioning
+
+### Correct time positioning:
+- **Method Introduction**: Starting from "Let me share a method..." and ending with "This is the entire operation process"
+- **Tips Sharing**: Start with "There is a little trick..." and end with "Pay attention to these points"
+- **Problem Solving**: Start from "When you encounter this problem..." and end with "The problem will be solved"
+
+### Mistakes to avoid:
+- Disconnect in the middle of the procedure
+- Separate method introduction from practical points
+- Truncate at key points in the case description
+- Omit important caveats or effect descriptions
+
+## Special considerations for experience content
+
+### 1. Operation method class:
+- Make sure to include complete operating steps and processes
+- Keep important operating points and precautions
+- Contains effect expectations and verification methods
+
+### 2. Skill sharing category:
+- Keep the skills intact and useful
+- Includes applicable scenarios and usage conditions
+- Ensure clear articulation of technical points
+
+### 3. Problem solving category:
+- Including the complete process of problem identification and solution
+- Keep solution ideas logical
+- Verification instructions to ensure the solution is effective
+
+### 4. Experience summary category:
+- Keep complete experience summaries and reflections
+- Contains success factors and failure lessons
+- Instructions to ensure replicability of experience
+
+## Notes
+
+1. **Method Completeness**: Ensure that each fragment contains a complete method introduction and operating points
+2. **Practical Value**: Important practical tips and precautions must be fully included
+3. **Logical coherence**: The logical chain of experience sharing should remain intact
+4. **Operation**: The operating steps and practical points should be clear and complete
+5. **Value Neutral**: Maintain an objective stance in the time positioning process and do not make value judgments on experience

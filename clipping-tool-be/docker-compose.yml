@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  clipagent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: clipagent-app
+    ports:
+      - "8000:8000"
+    environment:
+      # API configuration
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY:-}
+      - XAI_API_KEY=${XAI_API_KEY:-}
+      - API_PROVIDER=${API_PROVIDER:-openrouter}
+      - OPENROUTER_MODEL=${OPENROUTER_MODEL:-tngtech/deepseek-r1t2-chimera:free}
+      - GROK_MODEL=${GROK_MODEL:-grok-3-mini}
+
+      # Processing settings
+      - CHUNK_SIZE=${CHUNK_SIZE:-5000}
+      - MIN_SCORE_THRESHOLD=${MIN_SCORE_THRESHOLD:-0.7}
+      - MAX_CLIPS_PER_COLLECTION=${MAX_CLIPS_PER_COLLECTION:-5}
+
+      # Server settings
+      - HOST=0.0.0.0
+      - PORT=8000
+      - DEBUG=${DEBUG:-false}
+
+    volumes:
+      # Persist runtime data
+      - ./uploads:/app/uploads
+      - ./output:/app/output
+      - ./data:/app/data
+      - ./input:/app/input
+
+      # Mount configuration
+      - ./data/settings.json:/app/data/settings.json:ro
+
+    restart: unless-stopped
+
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '1.0'
+        reservations:
+          memory: 512M
+          cpus: '0.5'
+
+    # Health check
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+networks:
+  default:
+    name: clipagent-network

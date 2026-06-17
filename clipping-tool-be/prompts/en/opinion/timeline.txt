@@ -1,0 +1,101 @@
+# Opinion comment video time point positioning Prompt
+
+## Core principles: complete views, clear logic, and deep thinking
+
+1. **Completeness of opinions**: The timestamp must strictly correspond to the complete expression of opinions and argumentation process.
+2. **Logical coherence**: The time range must completely cover all the arguments of a point of view to ensure the completeness of the speculative logic.
+3. **Natural Boundary**: Prioritize locating time points at the natural boundaries of point transitions, argument paragraphs, or emotional expressions.
+
+---
+
+## Key instructions: how to determine `start_time` and `end_time`
+
+### Determination of `start_time`:
+- should be located at the beginning of the first core argument that expresses the idea.
+- Ignore any irrelevant transitions, emotional setup, or background information that precedes the statement.
+- **Preference**: Ensure the logical integrity of the argument at the starting point where the viewpoint is clearly expressed.
+- **Special considerations for opinion content**: If there is important emotional foreshadowing or value position expression, the starting time should be moved forward appropriately.
+
+### Determination of `end_time` (most important):
+- **Must** be the end timestamp** of the last sentence covering the core argument of the idea.
+- **Argument integrity**: Ensure that core content such as expression of opinions, support of arguments, and value judgments are complete without logical gaps.
+- **Natural ending**: Give priority to ending at a concluding statement, value judgment conclusion or point of view transition.
+- **Emotional expression inclusion**: If there is important emotional sublimation or value emphasis at the end of the idea, it should be included.
+- If the argumentative discussion continues to the end of the provided SRT text block, then `end_time` should be the end timestamp of the last relevant subtitle.
+- **Wrong practice**: Set `end_time` to the end time of the entire text block without thinking.This is absolutely to be avoided.
+
+### Principles of duration control of opinion content:
+- **Target Duration**: Each opinion piece should be between 3-8 minutes
+- **In-depth argumentation time**: In-depth analysis involving complex social issues can be appropriately extended to 10 minutes
+- **Simple point of view**: A clear and concise point of view can be compressed into 2-3 minutes
+- **Controversial Topic**: Discussion of controversial ideas can be extended to 12 minutes
+
+### Special treatment of opinion content:
+- **Multi-level argumentation**: Points of view containing multiple levels of argumentation should keep the entire argumentation chain intact
+- **Contrastive Analysis**: Positive and negative comparisons and multi-angle analysis should be treated as a whole to avoid splitting
+- **Value Judgment**: Viewpoints and value judgments should appear together and cannot be separated.
+- **Emotional Expression**: Important emotional sublimation or value emphasis should be fully included
+
+---
+
+## Input format
+You will receive a JSON object containing:
+- `outline`: A JSON array containing **multiple** opinion topics to be processed.
+- `srt_text`: A **single** SRT text block related to this batch of topics, in the format of `serial number\nstart --> end\ntext\n\n`.
+
+## Output format
+- Strictly follow the structure of the input outline and add `start_time` and `end_time` fields to **each** topic object.
+- **Key:** On output, rename the input's `title` field to `outline` and the `subtopics` field to `content`.
+- The final output is a JSON array containing **all** processed topics.
+- Make sure the time format is `HH:MM:SS,mmm`.
+
+**Strict JSON output requirements:**
+1. The output must start with `[` and end with `]`. Do not add any explanation text, title or Markdown code block mark
+2. Use standard English double quotation marks ", never use Chinese quotation marks "" or single quotation marks
+3. Make sure that all parentheses and square brackets match correctly, objects are separated by commas, and there is no comma after the last object.
+4. Quotes in strings must be escaped as \"
+5. Cannot contain any comments, extra text or control characters
+6. Ensure that the JSON format is fully valid and can be parsed by standard JSON parsers
+
+## Example of time positioning of opinion content
+
+### Correct time positioning:
+- **Values ​​Discussion**: Start with "I think contemporary young people..." and end with "This is my value judgment"
+- **Social Criticism**: Starting from "This social phenomenon reflects..." and ending with "How should we respond to it"
+- **Speculative Analysis**: Starting from "Looking at it from another perspective..." and ending with "Conclusion after comprehensive consideration"
+
+### Mistakes to avoid:
+- Break in the middle of a multi-layered argument
+- Separate viewpoints and arguments
+- Truncate at key points of emotional expression
+- Ignoring important value judgments or summaries
+
+## Special considerations for opinion content
+
+### 1. Controversial views:
+- Make sure to include a complete position expression and argumentation process
+- Retain analysis and thinking from different perspectives
+- Contains the basis and standards for value judgments
+
+### 2. Deep thinking:
+- Maintain the integrity of complex argument chains
+- Including the entire process of multi-dimensional analysis
+- Ensure the coherence of logical reasoning
+
+### 3. Emotional expression:
+- Retain important emotional colors and value positions
+- Contains key moments of emotional sublimation or value emphasis
+- Ensure a balance between emotional expression and rational analysis
+
+### 4. Social criticism:
+- A complete process including problem analysis and solution ideas
+- Keep criticism constructive and rational
+- Ensure critical positions are clearly expressed
+
+## Notes
+
+1. **Completeness of Points of View**: Ensure that each segment contains a complete expression of the point of view and argumentation process
+2. **Depth of Speculation**: Important speculative analysis and value judgments must be fully included
+3. **Logical coherence**: The logical chain of argumentation should remain intact
+4. **Emotional Balance**: Rational analysis and emotional expression should be coordinated and unified
+5. **Value neutral**: Maintain a neutral position in the time positioning process and do not make value judgments on opinions.

@@ -1,0 +1,28 @@
+You are a video content planning expert. Please cluster the following video slices according to their titles and abstracts, and generate a collection recommendation for each group of content.
+
+The requirements are as follows:
+1. Each collection contains at least 2 slices and a maximum of 5 slices;
+2. The following topic keywords should be fully considered when clustering:
+- Investment and financial management: investment, financial management, stocks, funds, stock trading, making money, income, rise and fall, unwinding, retail investors, A-shares, Beijing Stock Exchange, etc.
+- Workplace growth: workplace, work, skills, learning, Japanese, board secretary, counterattack, education, etc.
+- Social observation: social phenomena, Internet chaos, garbage classification, platform mechanisms, anchor industry, etc.
+- Cultural differences: culture, differences, Europe, America, Japan, Korea, food, language, body odor, etc.
+- Live interaction: live broadcast, interaction, barrage, fans, captain, reward, continuous wheat, etc.
+- Emotional relationship: love, emotion, social interaction, conversation, relationship, psychology, etc.
+- Healthy life: health, exercise, running, diet, milk, lifestyle, etc.
+- Creation platform: creation, platform, Bilibili, Xiaohongshu, photography, content operation, etc.
+
+3. Each collection contains:
+- Collection title (within 10 words, must accurately reflect the theme)
+- Introduction to the collection (no more than 50 words, describing the value and highlights of the collection)
+- List of included slice titles (sorted by topical relevance)
+
+4. Clustering principle:
+- Prioritize topic relevance to ensure that slice topics within the same collection are highly consistent
+- Consider content quality and ratings, giving priority to slices with high scores
+- Avoid forcibly classifying slices of different topics
+- If a topic has many slices, you can create multiple subdivision collections
+
+Please output in JSON format with field names collection_title, collection_summary, and clips.
+
+Here is a list of video slices:

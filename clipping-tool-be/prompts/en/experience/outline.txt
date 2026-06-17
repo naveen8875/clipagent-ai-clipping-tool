@@ -1,0 +1,116 @@
+# Experience sharing video outline extraction Prompt
+
+## Input format
+You will receive a JSON input:
+
+{
+"text": "{Video transcribed text snippet}"
+}
+
+- The `text` field is a fragment of the video transcribed content;
+- This content has been manually proofread to ensure basic semantic coherence;
+- Please only use the input content as a source of information, without any external expansion, common sense reasoning or logical supplementation.
+
+## Core mission: Pay equal attention to practical value and operability
+Your task is to **completely cover** all important experiences and techniques in the input text, while maintaining **moderate refinement** and avoid over-refinement.The goal is to extract **8-15 core topics**, each topic corresponding to **3-8 minutes** of video content.
+
+## Topic extraction principles
+
+### 1. Practical value priority principle
+- **Operation first**: Prioritize the extraction of experience sharing with clear operating steps and practical skills.
+- **Problem-solving orientation**: Focus on experience that can solve specific problems and meet actual needs
+- **Avoid empty talk**: Skip purely theoretical discussions and focus on specific experiences that can be replicated and practiced.
+
+### 2. Principle of empirical integrity
+- **Method System**: Ensure that each experience sharing contains a complete method system (background - method - effect - precautions)
+- **Detail-rich**: Focus on experience descriptions containing specific details and operational points
+- **Result Verification**: Highlight experience sharing including actual results and successful cases
+
+### 3. Principle of audience applicability
+- **Reasonable threshold**: Prioritize the extraction of experience content suitable for the ability level of the target audience
+- **Clear Scenario**: Focus on experiences with clear applicable scenarios and usage conditions
+- **Replicability**: Highlight empirical methods that are universally applicable and easy to replicate
+
+### 4. Value Hierarchy Principle
+- **Core Skills**: Prioritize the extraction of key skills and experience sharing of core methods
+- **Advanced Techniques**: Focus on advanced techniques to improve efficiency and optimize effects.
+- **Pitfall Avoidance Guide**: Highlighting experiences and lessons learned in preventing mistakes and avoiding risks
+
+## Topic merging and splitting strategies
+
+### Merge conditions (the following situations should be merged into one topic):
+- Different aspects or levels of the same skill or method
+- Interrelated operational steps or process links
+- Different solutions or techniques for the same problem
+- Different application experiences in similar scenarios
+
+### Split conditions (the following situations should be split into different topics):
+- Experience in different skill areas or application scenarios
+- Clear distinction between basic skills and advanced skills
+- Solutions for different problem types
+- Separation of theoretical learning and practical application
+
+## Output format
+
+Please output strictly in the following format without adding other descriptive text:
+
+### Outline:
+1. **[First-level topic name]**
+- [Subtopic 1: Highlight practicality and operability]
+- [Subtopic 2: Highlight practicality and operability]
+-…
+
+2. **[First-level topic name]**
+- [Subtopic 1]
+-…
+
+## Output example
+
+### Outline:
+1. **Efficient learning methods and practical skills**
+- Specific steps and timing of the Pomodoro Technique
+- Application skills of Feynman learning method in different subjects
+- Construction methods and practical points of the memory palace method
+- Application of SMART principles in study plan making
+
+2. **Workplace communication skills and practical experience**
+- Preparation process and presentation skills for meeting speeches
+- Format specifications and precautions for email communication
+- Communication strategies and conflict handling for cross-department collaboration
+- Reporting skills and timing of upward management
+
+3. **Personal time management system construction**
+- GTD workflow establishment steps and tool selection
+- Schedule priority judgment and time allocation
+- Specific methods and psychological adjustments to overcome procrastination
+- Boundary setting and implementation strategies for work-life balance
+
+## Special consideration for experience sharing content
+
+### 1. Operational steps experience:
+- Ensure completeness and logical sequence of steps
+- Contains key operational points and precautions
+- Provide specific time nodes and effect expectations
+
+### 2. Skills and methods experience:
+- Clarify the applicable scenarios and usage conditions of the technique
+- Contains specific operational details and practical points
+- Provide performance evaluation and improvement suggestions
+
+### 3. Problem solving experience:
+- Clearly describe the problem identification and analysis process
+- Includes the basis for solution selection and implementation steps
+- Provide effect verification and subsequent optimization methods
+
+### 4. Experience content on avoiding pitfalls:
+- Clarify error identification signs and prevention methods
+- Contains remedial measures after errors occur
+- Provide coping strategies for similar situations
+
+## Notes
+
+1. **Practicality Check**: Ensure that the extracted topics have clear practical value and operability
+2. **Integrity Guarantee**: Focus on content containing complete method systems and operational details
+3. **Applicability considerations**: Prioritize the extraction of experience content suitable for the ability level of the target audience.
+4. **Replicability Verification**: Ensure that the empirical method is generally applicable and replicable
+5. **Levels of Value**: Distinguish between different levels of basic skills, advanced skills and professional experience

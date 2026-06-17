@@ -1,0 +1,134 @@
+#Content explanation video time point positioning Prompt
+
+## Core principles: complete explanation, clear logic, and accurate information
+
+1. **Explanation Completeness**: The timestamp must strictly correspond to the complete explanation unit and content paragraph.
+2. **Logical coherence**: The time range must completely cover the logical chain of explanation to ensure the completeness of the analysis.
+3. **Natural Boundary**: Prioritize locating time points at the natural boundaries of plot transitions, topic switches, or explanatory paragraphs.
+
+---
+
+## Key instructions: how to determine `start_time` and `end_time`
+
+### Determination of `start_time`:
+- The start time of the **first core content** of the commentary topic should be located.
+- Ignore extraneous transitions, background music, or credits before the content.
+- **Preference**: Ensure the integrity of the explanation at the starting point where the topic is clearly raised or the explanation begins.
+- **Special considerations for content explanation**: If there is important background introduction, work fragments or foreshadowing content, the starting time should be moved forward appropriately.
+
+### Determination of `end_time` (most important):
+- **Must** be the end timestamp** of the **last sentence** covering the core commentary of the topic.
+- **Explanation Completeness**: Ensure that core content such as plot explanation, analysis and evaluation, and skill explanation are complete without any explanation gaps.
+- **Natural ending**: Give priority to ending at a concluding sentence, evaluation conclusion or topic change.
+- **Information Preservation**: If there is important supplementary information, Easter egg content or work fragments at the end of the explanation, it should be included.
+- If the discussion of the narration topic continues until the end of the provided SRT text block, then `end_time` should be the end timestamp of the last relevant subtitle.
+- **Wrong practice**: Set `end_time` to the end time of the entire text block without thinking.This is absolutely to be avoided.
+
+### Content explanation duration control principles:
+- **Target Duration**: Each commentary segment should be between 3-8 minutes
+- **Complex Narration Duration**: Narratives involving in-depth analysis or complex plots can be appropriately extended to 10 minutes
+- **Simple introduction**: Basic background introduction or simple concepts can be compressed to 2-3 minutes
+- **Important Content**: Core plot narration or important analysis can be extended to 12 minutes
+
+### Special treatment for content explanation:
+- **Complete Plot**: The complete plot narration including the beginning and the ending should be taken as a whole
+- **Analysis process**: The important analysis process and reasoning logic should be kept intact
+- **Work clips**: The work clips accompanying the commentary should be synchronized with the commentary content
+- **Technical explanation**: Technical demonstration and theoretical explanation should appear together and cannot be separated.
+
+---
+
+## Input format
+You will receive a JSON object containing:
+- `outline`: A JSON array containing **multiple** explanation topics to be processed.
+- `srt_text`: A **single** SRT text block related to this batch of topics, in the format of `serial number\nstart --> end\ntext\n\n`.
+
+## Output format
+- Strictly follow the structure of the input outline and add `start_time` and `end_time` fields to **each** topic object.
+- **Key:** On output, rename the input's `title` field to `outline` and the `subtopics` field to `content`.
+- The final output is a JSON array containing **all** processed topics.
+- Make sure the time format is `HH:MM:SS,mmm`.
+
+**Strict JSON output requirements:**
+1. The output must start with `[` and end with `]`. Do not add any explanation text, title or Markdown code block mark
+2. Use standard English double quotation marks ", never use Chinese quotation marks "" or single quotation marks
+3. Make sure that all parentheses and square brackets match correctly, objects are separated by commas, and there is no comma after the last object.
+4. Quotes in strings must be escaped as \"
+5. Cannot contain any comments, extra text or control characters
+6. Ensure that the JSON format is fully valid and can be parsed by standard JSON parsers
+
+## Content explanation time positioning example
+
+### Correct time positioning:
+- **Plot Explanation**: Starting from "Let's look at this key plot next..." and ending with "This is the core meaning of this plot"
+- **Character Analysis**: Start with "Let's analyze this character..." and end with "This is the deep meaning of the character"
+- **Technical Explanation**: Starting from the introduction of techniques to the end of demonstration and effect explanation
+- **Background Introduction**: Starting from the background description, to a summary of the relationship between the background and the topic
+
+### Mistakes to avoid:
+- Disconnect at key analysis points in plot commentary
+- Separate technical explanations from practical demonstrations
+- Truncated at the in-depth interpretation of character analysis
+- Omit important supplementary information or pieces of work
+
+##Special Considerations for Content Narrative Types
+
+### 1. Film and television commentary:
+- Ensure the completeness and logic of plot explanations
+- Retain important character analysis and relationship interpretation
+- Includes video clips to accompany the commentary
+- Ensure the professionalism and accuracy of technical analysis
+
+### 2. Game commentary category:
+- Keep game operations and commentary synchronized
+- Contains complete strategy steps and skill demonstrations
+- Retain important game background and world view introduction
+- Ensure the true delivery of the gaming experience
+
+### 3. Work analysis category:
+- Contains complete analysis process and reasoning logic
+- Maintain a combination of theoretical elaboration and case analysis
+- Ensure the integrity of cultural background and historical context
+- Contains important value judgments and meaning interpretations
+
+### 4. Popular science explanation category:
+- Maintain systematic and logical knowledge explanation
+- Contains complete experimental procedures and principle explanations
+- Ensure the accuracy and popularization of concept explanations
+- Retain important application examples and expansion content
+
+## Time positioning strategy for different commentary content
+
+### Plot-oriented explanation:
+- Positioning according to plot development: background setting-plot development-climax turning-end interpretation
+- Maintain the integrity and coherence of plot explanations
+- Contains important plot analysis and deeper meanings
+- Ensure the audience’s complete understanding of the plot
+
+### Skill-oriented explanation:
+- Positioning by skill type: basic skills - advanced skills - advanced applications - practical demonstrations
+- Keep technical explanations systematic and practical
+- Contains complete operation demonstration and effect display
+- Ensure skills are learnable and replicable
+
+### Analysis-oriented explanation:
+- Positioning according to the level of analysis: surface phenomenon - deep reasons - impact significance - value judgment
+- Maintain logic and depth in the analysis process
+- Contains important argumentation process and conclusion summary
+- Ensure the objectivity and persuasiveness of analysis
+
+### Knowledge-oriented explanation:
+- Positioning according to knowledge structure: basic concepts - core principles - application examples - expansion and extension
+- Maintain systematic and accurate knowledge transfer
+- Contains important conceptual explanations and principle elaborations
+- Ensure knowledge is practical and understandable
+
+## Notes
+
+1. **Composite Completeness**: Ensure that each segment contains complete narrative logic and content structure
+2. **Information Accuracy**: Important factual information and technical details must be fully included
+3. **Logical coherence**: The logical chain of explanation and analysis process should remain intact
+4. **Viewing experience**: Consider the audience’s understanding and acceptance rhythm
+5. **Value Transmission**: Ensure the complete communication of the educational value and entertainment value of the explanation
+6. **Original Respect**: Maintain respect for the original work during the time positioning process
+7. **Copyright Awareness**: Pay attention to the length of use of the work fragments and copyright issues

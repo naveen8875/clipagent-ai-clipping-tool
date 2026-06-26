@@ -60,7 +60,7 @@ class LLMFactory:
         Returns:
             Default LLM client instance
         """
-        return LLMFactory.create_client(provider="openrouter")
+        return LLMFactory.create_client()
     
     @staticmethod
     def test_connection(provider: str, api_key: str, model: Optional[str] = None) -> bool:

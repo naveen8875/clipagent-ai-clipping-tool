@@ -31,7 +31,7 @@ Edit `.env` and provide the provider values you want to use:
 ```bash
 API_PROVIDER=openrouter
 OPENROUTER_API_KEY=your-key
-OPENROUTER_MODEL=tngtech/deepseek-r1t2-chimera:free
+OPENROUTER_MODEL=nvidia/nemotron-3-ultra-550b-a55b:free
 ```
 
 Or:

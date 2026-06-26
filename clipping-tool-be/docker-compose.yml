@@ -13,7 +13,7 @@ services:
       - OPENROUTER_API_KEY=${OPENROUTER_API_KEY:-}
       - XAI_API_KEY=${XAI_API_KEY:-}
       - API_PROVIDER=${API_PROVIDER:-openrouter}
-      - OPENROUTER_MODEL=${OPENROUTER_MODEL:-tngtech/deepseek-r1t2-chimera:free}
+      - OPENROUTER_MODEL=${OPENROUTER_MODEL:-nvidia/nemotron-3-ultra-550b-a55b:free}
       - GROK_MODEL=${GROK_MODEL:-grok-3-mini}
 
       # Processing settings

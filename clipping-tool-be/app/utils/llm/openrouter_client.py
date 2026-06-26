@@ -10,12 +10,13 @@ from typing import Dict, Any, Optional
 import httpx
 
 logger = logging.getLogger(__name__)
+MAX_LOGGED_RESPONSE_CHARS = 4000
 
 
 class OpenRouterClient:
     """OpenRouter API Client"""
     
-    def __init__(self, api_key: str = None, model: str = "tngtech/deepseek-r1t2-chimera:free"):
+    def __init__(self, api_key: str = None, model: str = "nvidia/nemotron-3-ultra-550b-a55b:free"):
         """
         Initialize OpenRouter client
         
@@ -81,6 +82,11 @@ class OpenRouterClient:
                 )
                 response.raise_for_status()
                 result = response.json()
+                logger.debug(
+                    "OpenRouter raw response for model %s: %s",
+                    self.model,
+                    json.dumps(result, ensure_ascii=False)[:MAX_LOGGED_RESPONSE_CHARS]
+                )
             
             # Check response
             if result and "choices" in result and result["choices"]:
@@ -89,9 +95,19 @@ class OpenRouterClient:
                     return content
                 else:
                     logger.warning("API request successful but output is empty")
+                    logger.error(
+                        "OpenRouter empty content response for model %s: %s",
+                        self.model,
+                        json.dumps(result, ensure_ascii=False)[:MAX_LOGGED_RESPONSE_CHARS]
+                    )
                     return ""
             else:
                 error_msg = "API call failed, no valid response returned"
+                logger.error(
+                    "OpenRouter unexpected response shape for model %s: %s",
+                    self.model,
+                    json.dumps(result, ensure_ascii=False)[:MAX_LOGGED_RESPONSE_CHARS]
+                )
                 logger.error(error_msg)
                 raise Exception(error_msg)
                 
@@ -117,6 +133,19 @@ class OpenRouterClient:
         for attempt in range(max_retries):
             try:
                 return self.call(prompt, input_data)
+            except httpx.HTTPStatusError as e:
+                status_code = e.response.status_code
+                if 400 <= status_code < 500 and status_code != 429:
+                    logger.error(
+                        "OpenRouter request failed with a non-retryable client error: %s",
+                        status_code,
+                    )
+                    raise
+                if attempt == max_retries - 1:
+                    logger.error(f"OpenRouter API call failed after {max_retries} retries.")
+                    raise
+                logger.warning(f"Attempt {attempt + 1} failed, retrying: {str(e)}")
+                time.sleep(2 ** attempt)
             except ValueError:  # Don't retry on API key or parameter errors
                 raise
             except Exception as e:
@@ -230,4 +259,3 @@ class OpenRouterClient:
                         raise ValueError(f"Unable to parse valid JSON from response: {response[:200]}...") from final_e
             
             raise ValueError(f"Unable to parse valid JSON from response: {response[:200]}...")
-

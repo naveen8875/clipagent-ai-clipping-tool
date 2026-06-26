@@ -19,7 +19,7 @@ class TitleGenerator:
 
     def __init__(self, metadata_dir: Optional[Path] = None, prompt_files: Dict = None):
         # Use Grok specifically for title generation because it performs better in English.
-        self.llm_client = LLMFactory.create_client(provider="openrouter")
+        self.llm_client = LLMFactory.create_client(provider="grok")
         self.text_processor = TextProcessor()
 
         prompt_files_to_use = prompt_files if prompt_files is not None else PROMPT_FILES

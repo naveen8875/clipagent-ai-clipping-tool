@@ -11,8 +11,8 @@ class ApiSettings(BaseModel):
     """API settings model"""
     openrouter_api_key: str = ""
     xai_api_key: str = ""  # xAI (Grok) API key
-    api_provider: str = "openrouter"  # openrouter or grok
-    openrouter_model: str = "tngtech/deepseek-r1t2-chimera:free"
+    api_provider: str = "grok"  # openrouter or grok
+    openrouter_model: str = "nvidia/nemotron-3-ultra-550b-a55b:free"
     grok_model: str = "grok-3-mini"
     chunk_size: int = 5000
     min_score_threshold: float = 0.7

@@ -133,8 +133,8 @@ class Settings(BaseModel):
     """System settings"""
     openrouter_api_key: Optional[str] = ""  # OpenRouter API key
     xai_api_key: Optional[str] = ""  # xAI (Grok) API key
-    api_provider: str = "openrouter"  # API provider: openrouter or grok
-    openrouter_model: str = "tngtech/deepseek-r1t2-chimera:free"  # OpenRouter model
+    api_provider: str = "grok"  # API provider: openrouter or grok
+    openrouter_model: str = "nvidia/nemotron-3-ultra-550b-a55b:free"  # OpenRouter model
     grok_model: str = "grok-3-mini"  # Grok model for highlight detection
     chunk_size: int = 5000
     min_score_threshold: float = 0.7
@@ -190,8 +190,8 @@ class Settings(BaseModel):
 @dataclass
 class APIConfig:
     """API Configuration"""
-    provider: str = "openrouter"  # openrouter or grok
-    openrouter_model: str = "tngtech/deepseek-r1t2-chimera:free"
+    provider: str = "grok"  # openrouter or grok
+    openrouter_model: str = "nvidia/nemotron-3-ultra-550b-a55b:free"
     grok_model: str = "grok-3-mini"
     openrouter_api_key: Optional[str] = None
     xai_api_key: Optional[str] = None
@@ -227,18 +227,7 @@ class ConfigManager:
         self._setup_prompt_files()
     
     def _load_settings(self):
-        """Load settings from the environment and local config file."""
-        if os.getenv("OPENROUTER_API_KEY"):
-            self.settings.openrouter_api_key = os.getenv("OPENROUTER_API_KEY")
-        if os.getenv("XAI_API_KEY"):
-            self.settings.xai_api_key = os.getenv("XAI_API_KEY")
-        if os.getenv("API_PROVIDER"):
-            self.settings.api_provider = os.getenv("API_PROVIDER")
-        if os.getenv("OPENROUTER_MODEL"):
-            self.settings.openrouter_model = os.getenv("OPENROUTER_MODEL")
-        if os.getenv("GROK_MODEL"):
-            self.settings.grok_model = os.getenv("GROK_MODEL")
-        
+        """Load settings from disk, then let environment variables override them."""
         config_file = PROJECT_ROOT / "data" / "settings.json"
         if config_file.exists():
             try:
@@ -249,6 +238,31 @@ class ConfigManager:
                             setattr(self.settings, key, value)
             except Exception as e:
                 print(f"Failed to load config file: {e}")
+
+        self._apply_environment_overrides()
+
+    def _apply_environment_overrides(self):
+        """Apply environment variable overrides to the current settings."""
+        env_mappings = {
+            "openrouter_api_key": "OPENROUTER_API_KEY",
+            "xai_api_key": "XAI_API_KEY",
+            "api_provider": "API_PROVIDER",
+            "openrouter_model": "OPENROUTER_MODEL",
+            "grok_model": "GROK_MODEL",
+        }
+
+        for field, env_var in env_mappings.items():
+            env_value = os.getenv(env_var)
+            if env_value:
+                setattr(self.settings, field, env_value)
+
+    def _sync_environment_from_settings(self):
+        """Mirror active settings into process environment variables."""
+        os.environ["OPENROUTER_API_KEY"] = self.settings.openrouter_api_key or ""
+        os.environ["XAI_API_KEY"] = self.settings.xai_api_key or ""
+        os.environ["API_PROVIDER"] = self.settings.api_provider
+        os.environ["OPENROUTER_MODEL"] = self.settings.openrouter_model
+        os.environ["GROK_MODEL"] = self.settings.grok_model
     
     def _setup_prompt_files(self):
         """Ensure the default English prompt directory exists."""
@@ -320,6 +334,7 @@ class ConfigManager:
             if hasattr(self.settings, key):
                 setattr(self.settings, key, value)
         
+        self._sync_environment_from_settings()
         self._save_settings()
     
     def _save_settings(self):

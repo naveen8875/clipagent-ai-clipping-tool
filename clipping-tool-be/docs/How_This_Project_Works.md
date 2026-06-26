@@ -604,7 +604,7 @@ class Settings(BaseModel):
     api_provider: str = "openrouter"  # or "grok"
     openrouter_api_key: str = ""
     xai_api_key: str = ""
-    openrouter_model: str = "tngtech/deepseek-r1t2-chimera:free"
+    openrouter_model: str = "nvidia/nemotron-3-ultra-550b-a55b:free"
     grok_model: str = "grok-3-mini"
     
     # Processing Parameters
